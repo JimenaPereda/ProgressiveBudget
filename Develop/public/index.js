@@ -1,6 +1,14 @@
 let transactions = [];
 let myChart;
 
+
+if("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js", { scope: "/" })
+    .then(() => console.log("Service Worker registered successfully."))
+    .catch(error => console.log("Service Worker registration failed:", error));
+};
+
+
 fetch("/api/transaction")
   .then(response => {
     return response.json();
@@ -82,6 +90,7 @@ function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
   let amountEl = document.querySelector("#t-amount");
   let errorEl = document.querySelector(".form .error");
+
 
   // validate form
   if (nameEl.value === "" || amountEl.value === "") {
